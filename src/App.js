@@ -1,37 +1,34 @@
-
+import React, {useState} from 'react';
 import './App.css';
+import TodoTable from './components/TodoTable.js';
+import NewTodoForm from './components/NewTodoForm.js';
 
 function App() {
+  const [listTodos, setListTodo] = useState( [
+    { rowNumber: 1, rowDes: "Feed dogs", rowAssiged: "Eric"},
+    { rowNumber: 2, rowDes: "Feed dogs 1", rowAssiged: "Eric 1"},
+    { rowNumber: 3, rowDes: "Feed dogs 2", rowAssiged: "Eric 2"},
+  ]);
+
+  const funcAddTodo = (des, assign) => {
+    if(des === '' || assign === '') return;
+    if(listTodos.length > 0){
+      const newTodo = {
+        rowNumber: listTodos.length + 1, rowDes: des, rowAssiged: assign
+      };
+      setListTodo([...listTodos, newTodo]);
+    }
+  }
   return (
-    <div>
-      <div>
-        <div>
+    <div className='mt-5 container'>
+      <div className='card'>
+        <div className='card-header'>
           Your todos
         </div>
 
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th scope='col'>#</th>
-                <th scope='col'>Description</th>
-                <th scope='col'>Assigned</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope='row'>1</th>
-                <td>Feed dog</td>
-                <td>Eric</td>
-              </tr>
-              
-              <tr>
-                <th scope='row'>2</th>
-                <td>Feed dog 1</td>
-                <td>Eric 1</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className='card-body'>
+          <TodoTable listTodos={listTodos}></TodoTable>
+          <NewTodoForm funcAddTodo={funcAddTodo}></NewTodoForm>
         </div>
 
       </div>
