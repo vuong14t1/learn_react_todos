@@ -1,5 +1,6 @@
-import TodoRowItem from "./TodoRowItem";
-function TodoTable({listTodos, funcDelete}){
+import {TodoRowItem} from "./TodoRowItem";
+
+export const TodoTable: React.FC<{listTodos: TodoModel[], funcDelete: Function}> = ({listTodos, funcDelete}) => {
     return (
         <table className='table table-hover'>
             <thead>
@@ -13,7 +14,7 @@ function TodoTable({listTodos, funcDelete}){
             <tbody>
                 {
                     listTodos.map((todo, idx) => {
-                        return <TodoRowItem key={idx} rowNumber = {idx + 1} rowDes = {todo.rowDes} rowAssiged = {todo.rowAssiged} funcDelete = {funcDelete}></TodoRowItem>
+                        return <TodoRowItem key={idx} rowNumber = {todo.rowNumber} rowDes = {todo.rowDes} rowAssiged = {todo.rowAssiged} funcDelete = {funcDelete}></TodoRowItem>
                     })
                 }
               
@@ -21,5 +22,3 @@ function TodoTable({listTodos, funcDelete}){
           </table>
     );
 }
-
-export default TodoTable;

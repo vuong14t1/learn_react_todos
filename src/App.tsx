@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
-import TodoTable from './components/TodoTable.js';
-import NewTodoForm from './components/NewTodoForm.js';
+import {TodoTable} from './components/TodoTable';
+import {NewTodoForm} from './components/NewTodoForm';
 
 function App() {
   const [isEnableAdd, setEnableAdd] = useState(false);
@@ -12,19 +12,30 @@ function App() {
     { rowNumber: 3, rowDes: "Feed dogs 2", rowAssiged: "Eric 2"},
   ]);
 
-  const funcAddTodo = (des, assign) => {
+  const funcAddTodo = (des: string, assign: string) => {
     if(des === '' || assign === '') return;
+    let newTodo;
     if(listTodos.length > 0){
-      const newTodo = {
+      newTodo = {
         rowNumber: listTodos.length + 1, rowDes: des, rowAssiged: assign
       };
-      setListTodo([...listTodos, newTodo]);
+      
+    }else{
+      newTodo = {
+        rowNumber: 1, rowDes: des, rowAssiged: assign
+      };
     }
+
+    setListTodo([...listTodos, newTodo]);
   }
 
-  const funcDeleteTodo = (idx) => {
+  const funcDeleteTodo = (idx: number) => {
     const result = listTodos.filter(todo => todo.rowNumber !== idx);
     setListTodo(result);
+  }
+
+  const funcSetEnableAdd = () => {
+    setEnableAdd(!isEnableAdd);
   }
   return (
     <div className='mt-5 container'>
@@ -34,9 +45,9 @@ function App() {
         </div>
 
         <div className='card-body'>
-          <TodoTable listTodos={listTodos} funcDelete = {funcDeleteTodo}></TodoTable>
-          <button className='btn btn-primary' onClick={setEnableAdd.bind(this, !isEnableAdd)}>{isEnableAdd ? "Close Add Todo" : "Open Add Todo"}</button>
-          {isEnableAdd && (<NewTodoForm funcAddTodo={funcAddTodo}></NewTodoForm>)}
+          <TodoTable listTodos={listTodos} funcDelete = { funcDeleteTodo }></TodoTable>
+          <button className='btn btn-primary' onClick={ funcSetEnableAdd }>{isEnableAdd ? "Close Add Todo" : "Open Add Todo"}</button>
+          {isEnableAdd && (<NewTodoForm funcAddTodo={ funcAddTodo }></NewTodoForm>)}
         </div>
 
       </div>

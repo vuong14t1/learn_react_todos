@@ -1,9 +1,13 @@
 import React, {useState} from "react";
 
-function NewTodoForm({funcAddTodo}){
+export const NewTodoForm: React.FC<{funcAddTodo: Function}> = ({funcAddTodo}) => {
 
     const [description, setDescription] = useState('');
     const [assign, setAssign] = useState('');
+
+    const handleAddTodo = () => {
+        funcAddTodo(description, assign);
+    }
     
     return (
         <div className="mt-5">
@@ -18,10 +22,8 @@ function NewTodoForm({funcAddTodo}){
                     <textarea className="form-control" rows={3} required onChange={event => setDescription(event.target.value)} value={description}></textarea>
                 </div>
 
-                <button type="button" className="btn btn-primary mt-3" onClick={funcAddTodo.bind(this, description, assign)}>Add Todo</button>
+                <button type="button" className="btn btn-primary mt-3" onClick={handleAddTodo}>Add Todo</button>
             </form>
         </div>
     );
 }
-
-export default NewTodoForm;
